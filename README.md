@@ -36,24 +36,24 @@ uv tool update-shell
 
 ## 특정 버전 설치
 
-기본 설치 스크립트는 현재 `dist/install.sh` 또는 `dist/install.ps1`에 기록된 기본 버전을 설치합니다.
+기본 설치 스크립트는 GitHub Release의 최신 버전을 확인한 뒤 해당 wheel을 설치합니다.
 
 다른 버전을 설치하려면 `CALLABO_CLI_VERSION`을 지정합니다.
 
 ```bash
-curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_VERSION=0.1.7 sh
+curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_VERSION=0.1.10 sh
 ```
 
 특정 wheel URL을 직접 지정할 수도 있습니다.
 
 ```bash
-curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_WHEEL_URL=https://github.com/rtzr/callabo-cli/releases/download/v0.1.7/callabo_cli-0.1.7-py3-none-any.whl sh
+curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_WHEEL_URL=https://github.com/rtzr/callabo-cli/releases/download/v0.1.10/callabo_cli-0.1.10-py3-none-any.whl sh
 ```
 
 Windows에서는 설치 파일 실행 전에 환경 변수를 지정합니다.
 
 ```powershell
-$env:CALLABO_CLI_VERSION = "0.1.7"
+$env:CALLABO_CLI_VERSION = "0.1.10"
 irm https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.ps1 | iex
 ```
 
@@ -127,23 +127,87 @@ callabo records ls
 callabo records ls --workspace <workspace_slug>
 ```
 
-## 자주 쓰는 명령
+## 주요 명령
 
-```bash
-callabo records ls
-callabo records search --query <query>
-callabo records show --record-id <record_id>
-callabo records transcript --record-id <record_id>
-callabo records insights --record-id <record_id>
-callabo records upload ./meeting.mp3
-callabo records download --record-id <record_id>
+아래 목록은 `callabo, version 0.1.10`의 `--help` 출력 기준이며, command별 대표 옵션만 정리합니다.
+
+```text
+callabo
+├── auth
+│   ├── login
+│   ├── complete
+│   ├── refresh
+│   ├── resend-link
+│   └── logout
+├── workspace
+│   ├── ls
+│   └── default
+├── labels
+│   └── ls
+├── records
+│   ├── ls
+│   ├── search
+│   ├── show
+│   ├── transcript
+│   ├── insights
+│   ├── dialogs
+│   ├── upload
+│   ├── download
+│   └── labels
+│       ├── add
+│       └── remove
+└── skill
+    └── setup
 ```
 
-각 명령의 옵션은 `--help`로 확인합니다.
+### Auth
+
+| 명령 | 대표 옵션 |
+| --- | --- |
+| `callabo auth login` | `--email-password`, `--base-url`, `--login-url` |
+| `callabo auth complete` | `[TOKEN]`, `--base-url` |
+| `callabo auth refresh` | 없음 |
+| `callabo auth resend-link` | 없음 |
+| `callabo auth logout` | 없음 |
+
+### Workspace와 Labels
+
+| 명령 | 대표 옵션 |
+| --- | --- |
+| `callabo workspace ls` | `--format text/json` |
+| `callabo workspace default` | `[workspace_slug]`, `--clear`, `--format text/json` |
+| `callabo labels ls` | `--workspace`, `--format text/json` |
+
+### Records
+
+| 명령 | 대표 옵션 |
+| --- | --- |
+| `callabo records ls` | `--workspace`, `--team-id`, `--label-id`, `--label-filter and/or`, `--format text/json` |
+| `callabo records search` | `--query`, `--workspace`, `--team-id`, `--label-id`, `--label-filter and/or`, `--format text/json` |
+| `callabo records show` | `--record-id`, `--session-id`, `--workspace`, `--format text/json` |
+| `callabo records transcript` | `--record-id`, `--session-id`, `--workspace`, `--format text/json` |
+| `callabo records insights` | `--record-id`, `--session-id`, `--workspace`, `--format text/json` |
+| `callabo records dialogs` | `--record-id`, `--session-id`, `--workspace`, `--format text/json` |
+| `callabo records upload` | `<file_path>`, `--workspace`, `--title`, `--scope workspace/team/private`, `--team-id`, `--label-id`, `--language`, `--format text/json` |
+| `callabo records download` | `--record-id`, `--workspace`, `--output`, `--force` |
+
+### Record Labels
+
+| 명령 | 대표 옵션 |
+| --- | --- |
+| `callabo records labels add` | `--record-id`, `--session-id`, `--label-id`, `--workspace` |
+| `callabo records labels remove` | `--record-id`, `--session-id`, `--label-id`, `--workspace` |
+
+### Skill
+
+| 명령 | 대표 옵션 |
+| --- | --- |
+| `callabo skill setup` | `--agent codex/claude/gemini`, `--scope user/project`, `--force` |
+
+각 명령의 전체 옵션은 `--help`로 확인합니다.
 
 ```bash
-callabo records --help
-callabo records upload --help
+callabo <command_path> --help
 ```
 
 ## 저장 위치
