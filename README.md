@@ -14,11 +14,10 @@ curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.
 
 ### Windows
 
-Command Prompt 또는 PowerShell에서 아래 명령을 실행합니다.
+PowerShell에서 아래 명령을 실행합니다.
 
 ```powershell
-curl.exe -LsSf -o install-callabo-cli.bat https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.bat
-.\install-callabo-cli.bat
+irm https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.ps1 | iex
 ```
 
 설치 스크립트는 `uv`가 없으면 먼저 `uv`를 설치한 뒤, GitHub Release에 업로드된 Callabo CLI wheel을 설치합니다.
@@ -37,25 +36,25 @@ uv tool update-shell
 
 ## 특정 버전 설치
 
-기본 설치 스크립트는 현재 `dist/install.sh` 또는 `dist/install.bat`에 기록된 기본 버전을 설치합니다.
+기본 설치 스크립트는 현재 `dist/install.sh` 또는 `dist/install.ps1`에 기록된 기본 버전을 설치합니다.
 
 다른 버전을 설치하려면 `CALLABO_CLI_VERSION`을 지정합니다.
 
 ```bash
-curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_VERSION=0.1.6 sh
+curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_VERSION=0.1.7 sh
 ```
 
 특정 wheel URL을 직접 지정할 수도 있습니다.
 
 ```bash
-curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_WHEEL_URL=https://github.com/rtzr/callabo-cli/releases/download/v0.1.6/callabo_cli-0.1.6-py3-none-any.whl sh
+curl -LsSf https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.sh | CALLABO_CLI_WHEEL_URL=https://github.com/rtzr/callabo-cli/releases/download/v0.1.7/callabo_cli-0.1.7-py3-none-any.whl sh
 ```
 
 Windows에서는 설치 파일 실행 전에 환경 변수를 지정합니다.
 
-```bat
-set CALLABO_CLI_VERSION=0.1.6
-install-callabo-cli.bat
+```powershell
+$env:CALLABO_CLI_VERSION = "0.1.7"
+irm https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.ps1 | iex
 ```
 
 ## 최초 구성
@@ -63,6 +62,7 @@ install-callabo-cli.bat
 ### 1. 로그인
 
 기본 로그인은 브라우저에서 진행합니다. Google, Apple, email/password 로그인을 완료하면 CLI가 로컬 callback으로 인증을 완료하고 토큰을 저장합니다.
+로그인 성공 시 접근 가능한 workspace 목록의 첫 번째 workspace를 기본 workspace로 저장합니다. 이미 저장된 기본 workspace가 있으면 기존 값을 유지합니다.
 
 ```bash
 callabo auth login
