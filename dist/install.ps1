@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $DefaultRepo = "https://github.com/rtzr/callabo-cli"
-$DefaultVersion = "0.1.7"
+$DefaultVersion = "0.1.8"
 
 $CallaboCliRepo = if ($env:CALLABO_CLI_REPO) { $env:CALLABO_CLI_REPO.TrimEnd([char]"/") } else { $DefaultRepo }
 $CallaboCliVersion = if ($env:CALLABO_CLI_VERSION) { $env:CALLABO_CLI_VERSION } else { $DefaultVersion }
