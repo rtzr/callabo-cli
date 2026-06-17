@@ -1,15 +1,37 @@
 $ErrorActionPreference = "Stop"
 
 $DefaultRepo = "https://github.com/rtzr/callabo-cli"
-$DefaultVersion = "0.1.8"
 
 $CallaboCliRepo = if ($env:CALLABO_CLI_REPO) { $env:CALLABO_CLI_REPO.TrimEnd([char]"/") } else { $DefaultRepo }
-$CallaboCliVersion = if ($env:CALLABO_CLI_VERSION) { $env:CALLABO_CLI_VERSION } else { $DefaultVersion }
-$CallaboCliWheelUrl = if ($env:CALLABO_CLI_WHEEL_URL) {
-    $env:CALLABO_CLI_WHEEL_URL
-} else {
-    "$CallaboCliRepo/releases/download/v$CallaboCliVersion/callabo_cli-$CallaboCliVersion-py3-none-any.whl"
+
+function Get-CallaboCliLatestVersion {
+    $repoPath = $CallaboCliRepo -replace "^https://github.com/", ""
+    $latestReleaseUrl = "https://api.github.com/repos/$repoPath/releases/latest"
+    $latestRelease = Invoke-RestMethod -Uri $latestReleaseUrl -Headers @{ Accept = "application/vnd.github+json" }
+
+    if ([string]::IsNullOrWhiteSpace($latestRelease.tag_name)) {
+        [Console]::Error.WriteLine("Failed to resolve the latest Callabo CLI release version.")
+        exit 1
+    }
+
+    return $latestRelease.tag_name.TrimStart("v")
 }
+
+function Get-CallaboCliWheelUrl {
+    if (-not [string]::IsNullOrWhiteSpace($env:CALLABO_CLI_WHEEL_URL)) {
+        return $env:CALLABO_CLI_WHEEL_URL
+    }
+
+    $version = if (-not [string]::IsNullOrWhiteSpace($env:CALLABO_CLI_VERSION)) {
+        $env:CALLABO_CLI_VERSION
+    } else {
+        Get-CallaboCliLatestVersion
+    }
+
+    return "$CallaboCliRepo/releases/download/v$version/callabo_cli-$version-py3-none-any.whl"
+}
+
+$CallaboCliWheelUrl = Get-CallaboCliWheelUrl
 
 function Add-PathForCurrentSession {
     param([string] $PathToAdd)
