@@ -1,0 +1,20 @@
+{
+  "name": "callabo-cli",
+  "interface": {
+    "displayName": "Callabo CLI"
+  },
+  "plugins": [
+    {
+      "name": "callabo-cli",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
