@@ -1,0 +1,37 @@
+{
+  "name": "callabo-cli",
+  "version": "0.1.0",
+  "description": "Use Callabo records, labels, transcripts, dialogs, insights, uploads, and downloads through the local callabo CLI.",
+  "author": {
+    "name": "Callabo Team",
+    "email": "callabo@rtzr.ai"
+  },
+  "homepage": "https://github.com/rtzr/callabo-cli",
+  "repository": "https://github.com/rtzr/callabo-cli",
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "callabo",
+    "cli",
+    "records",
+    "transcripts",
+    "meetings"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Callabo CLI",
+    "shortDescription": "Inspect Callabo records through the local callabo CLI.",
+    "longDescription": "Callabo CLI helps Codex use the local callabo executable for workspace labels, records, transcripts, dialogs, insights, uploads, downloads, and authentication troubleshooting.",
+    "developerName": "rtzr",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write",
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Find the latest Callabo record for this topic.",
+      "Summarize insights from a Callabo meeting.",
+      "Show labels and search Callabo records."
+    ]
+  }
+}
