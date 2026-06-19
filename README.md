@@ -2,7 +2,7 @@
 
 Callabo CLI는 Callabo 인증과 record 조회, 업로드, 다운로드를 터미널에서 실행하기 위한 도구입니다.
 
-이 저장소는 배포용 저장소입니다. CLI 소스 코드는 `rtzr/callabo-server`의 `cli/` 디렉터리를 기준으로 관리하고, 이 저장소에는 최신 설치 스크립트와 wheel artifact만 배포합니다.
+이 저장소는 Callabo CLI 배포용 저장소입니다. 최신 설치 스크립트와 wheel artifact, 그리고 Claude Code/Codex 플러그인을 배포합니다.
 
 ## 설치
 
@@ -55,6 +55,33 @@ Windows에서는 설치 파일 실행 전에 환경 변수를 지정합니다.
 ```powershell
 $env:CALLABO_CLI_VERSION = "0.1.10"
 irm https://raw.githubusercontent.com/rtzr/callabo-cli/main/dist/install.ps1 | iex
+```
+
+## 에이전트 플러그인 설치
+
+Callabo CLI 스킬을 Claude Code 또는 Codex에 플러그인으로 설치할 수 있습니다. 플러그인은 `callabo` 명령을 직접 호출하므로, 먼저 위 안내대로 CLI를 설치하고 로그인을 완료합니다.
+
+### Claude Code
+
+```bash
+claude plugin marketplace add rtzr/callabo-cli
+claude plugin install callabo-cli@callabo-cli
+```
+
+### Codex
+
+```bash
+codex plugin marketplace add rtzr/callabo-cli
+codex plugin add callabo-cli@callabo-cli
+```
+
+마켓플레이스를 최신 상태로 갱신하려면 각각 `claude plugin marketplace update`, `codex plugin marketplace upgrade`를 실행합니다.
+
+설치한 CLI에 내장된 스킬 설치 명령을 사용할 수도 있습니다.
+
+```bash
+callabo skill setup --agent claude
+callabo skill setup --agent codex
 ```
 
 ## 최초 구성
