@@ -1,0 +1,30 @@
+{
+  "name": "callabo-cli",
+  "owner": {
+    "name": "rtzr",
+    "email": "callabo@rtzr.ai",
+    "url": "https://github.com/rtzr/callabo-cli"
+  },
+  "plugins": [
+    {
+      "name": "callabo-cli",
+      "source": "./plugins/claude",
+      "description": "Use Callabo records, labels, transcripts, dialogs, insights, uploads, and downloads through the local callabo CLI.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Callabo Team",
+        "email": "callabo@rtzr.ai"
+      },
+      "homepage": "https://github.com/rtzr/callabo-cli",
+      "repository": "https://github.com/rtzr/callabo-cli",
+      "license": "LicenseRef-Proprietary",
+      "keywords": [
+        "callabo",
+        "cli",
+        "records",
+        "transcripts",
+        "meetings"
+      ]
+    }
+  ]
+}
